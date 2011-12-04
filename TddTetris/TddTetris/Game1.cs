@@ -134,7 +134,7 @@ namespace TddTetris
             {
                 for (int y = 0; y < field.Height; y++)
                 {
-                    Color? color = field.ColorAt(new Vector2(x, y));
+                    Color? color = field.ColorAt(new Point(x, y));
 
                     if (color.HasValue)
                     {

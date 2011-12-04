@@ -1,16 +1,14 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
 
 namespace TddTetris
 {
     public interface IBlock
     {
+        public List<List<Color?>> Grid { get; set; }
         void RotateLeft();
         void RotateRight();
 
-        Color? ColorAt(Vector2 position);
+        Color? ColorAt( Point position );
     }
 }

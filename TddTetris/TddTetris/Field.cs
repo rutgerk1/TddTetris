@@ -12,33 +12,43 @@ namespace TddTetris
         public int Height { get; private set; }
 
         public IBlock Block { get; private set; }
-        public Vector2 Position { get; private set; }
+        public Point Position { get; private set; }
+        private List<List<Color?>> grid;
 
-        public Field(int width, int height)
+        public Field( int width, int height )
         {
             this.Width = width;
             this.Height = height;
+            grid = new List<List<Color?>>( height );
+            for ( int i = 0; i < height; i++ )
+            {
+                grid.Add( new List<Color?>( width ) );
+                for ( int j = 0; j < width; j++ )
+                {
+                    grid [ i ].Add( null );
+                }
+            }
         }
 
-        public Color? ColorAt(Vector2 position)
+        public Color? ColorAt( Point position )
         {
-            float x = position.X;
-            float y = position.Y;
+            int x = position.X;
+            int y = position.Y;
 
-            if (x < 0 || x >= Width || y < 0 || y >= Height)
+            if ( x < 0 || x >= Width || y < 0 || y >= Height )
             {
                 throw new IndexOutOfRangeException();
             }
 
-            if (position == Position)
+            if ( position == Position )
             {
                 return Color.White;
             }
 
-            return null;
+            return grid [ y ] [ x ];
         }
 
-        public void SetBlock(IBlock block, Vector2 position)
+        public void SetBlock( IBlock block, Point position )
         {
             this.Block = block;
             this.Position = position;
@@ -46,36 +56,44 @@ namespace TddTetris
 
         public void AdvanceBlock()
         {
-            Position = new Vector2(Position.X, Position.Y + 1);
+            Position = new Point( Position.X, Position.Y + 1 );
         }
 
         public bool CanMoveLeft()
         {
-            return Position.X > 0;
+            return Position.X > 0 && grid [ Position.Y ] [ Position.X - 1 ] == null;
         }
 
         public void MoveBlockLeft()
         {
-            Position = new Vector2(Position.X - 1, Position.Y);
+            Position = new Point( Position.X - 1, Position.Y );
         }
 
         public bool CanMoveRight()
         {
-            return Position.X < Width - 1;
+            return Position.X < Width - 1 && grid [ Position.Y ] [ Position.X + 1 ] == null;
         }
 
         public void MoveBlockRight()
         {
-            Position = new Vector2(Position.X + 1, Position.Y);
+            Position = new Point( Position.X + 1, Position.Y );
         }
 
         public bool CanAdvance()
         {
-            return Position.Y < Height - 1;
+            return Position.Y < Height - 1 && grid [ Position.Y + 1 ] [ Position.X ] == null;
         }
 
+        /// <summary>
+        /// freezes a block when hitting bottom
+        /// </summary>
         public void FixBlock()
         {
+            while ( CanAdvance() )
+            {
+                AdvanceBlock();
+            }
+            grid [ Position.Y ] [ Position.X ] = Color.White;
         }
     }
 }

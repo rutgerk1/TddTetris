@@ -1,24 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace TddTetris
 {
     public class Block : IBlock
     {
+        public List<List<Color?>> Grid { get; set; }
+        private int gridsize = 5;
+
+        private List<List<Color?>> createGrid()
+        {
+            List<List<Color?>> grid = new List<List<Color?>>();
+            for ( int i = 0; i < gridsize; i++ )
+            {
+                grid.Add( new List<Color?>() );
+                for ( int j = 0; j < gridsize; j++ )
+                {
+                    grid [ i ].Add( null );
+                }
+            }
+            return grid;
+        }
+
+
+        public Block()
+        {
+            Grid = createGrid();
+        }
+
         public void RotateLeft()
         {
-            throw new NotImplementedException();
+            List<List<Color?>> newGrid = createGrid();
+
+            for ( int i = 0; i < gridsize; i++ )
+            {
+                for ( int j = 0; j < gridsize; j++ )
+                {
+                    newGrid [ i ] [ j ] = Grid [ j ] [ Math.Abs( i - (gridsize-1) ) ];
+                }
+            }
+            Grid = newGrid;
         }
 
         public void RotateRight()
         {
-            throw new NotImplementedException();
+            RotateLeft();
+            RotateLeft();
+            RotateLeft();
         }
 
-        public Color? ColorAt(Vector2 position)
+        public Color? ColorAt( Point position )
         {
             throw new NotImplementedException();
         }
