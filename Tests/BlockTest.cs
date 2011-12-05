@@ -34,6 +34,10 @@ namespace Tests
             Assert.AreEqual( Color.Tomato, block.Grid [ 0 ] [ 0 ] );
         }
 
+
+        /*
+         * Problemen zijn hier de gridconstructie en mogelijke index-out-of-range-excepties
+         */
         [Test]
         public void RotateRightTest()
         {

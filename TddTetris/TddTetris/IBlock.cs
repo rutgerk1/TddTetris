@@ -5,7 +5,7 @@ namespace TddTetris
 {
     public interface IBlock
     {
-        public List<List<Color?>> Grid { get; set; }
+        List<List<Color?>> Grid { get; set; }
         void RotateLeft();
         void RotateRight();
 

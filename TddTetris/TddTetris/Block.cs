@@ -7,7 +7,7 @@ namespace TddTetris
     public class Block : IBlock
     {
         public List<List<Color?>> Grid { get; set; }
-        private int gridsize = 5;
+        private int gridsize = 5;   // bad: magic number
 
         private List<List<Color?>> createGrid()
         {
