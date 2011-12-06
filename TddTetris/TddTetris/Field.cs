@@ -42,7 +42,7 @@ namespace TddTetris
 
             //position is position in grid, Position is position of Block
             Point p = new Point( ( position.X - Position.X ), ( position.Y - Position.Y ) );
-            if ( Block.ColorAt( p ) != null )
+            if ( Block != null && Block.ColorAt( p ) != null )
             {
                 return Color.White;
             }
@@ -83,7 +83,7 @@ namespace TddTetris
 
         public bool CanAdvance()
         {
-            return Position.Y < Height - 1 && grid [ Position.Y + 1 ] [ Position.X ] == null;
+            return Position.Y < Height - 1 ;//&& grid [ Position.Y + 1 ] [ Position.X ] == null;
         }
 
         /// <summary>

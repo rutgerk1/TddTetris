@@ -70,10 +70,32 @@ namespace Tests
 
             block.Grid [ position.Y ] [ position.X ] = Color.Tomato;
             Assert.AreEqual( Color.Tomato, block.ColorAt( position ) );
-
         }
 
 
+        // based on found bug
+        // when the block position is not in the field yet, 
+        // it should always return null and not throw an exception
+        [TestCase( 0, -5 )]
+        public void ColorAtPositionNegativeTest( int x, int y )
+        {
+            Point position = new Point( x, y );
+            Block block = new Block();
+
+            Assert.AreEqual( null, block.ColorAt( position ) );
+        }
+
+        // based on found bug
+        // when the block position is in the field, but further than the block 
+        // it should always return null and not throw an exception
+        [TestCase( 0, 5 )]
+        public void ColorAtPositionFurtherThanBlockTest( int x, int y )
+        {
+            Point position = new Point( x, y );
+            Block block = new Block();
+
+            Assert.AreEqual( null, block.ColorAt( position ) );
+        }
 
     }
 }

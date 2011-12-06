@@ -37,7 +37,7 @@ namespace TddTetris
             {
                 for ( int j = 0; j < gridsize; j++ )
                 {
-                    newGrid [ i ] [ j ] = Grid [ j ] [ Math.Abs( i - (gridsize-1) ) ];
+                    newGrid [ i ] [ j ] = Grid [ j ] [ Math.Abs( i - ( gridsize - 1 ) ) ];
                 }
             }
             Grid = newGrid;
@@ -52,7 +52,12 @@ namespace TddTetris
 
         public Color? ColorAt( Point position )
         {
-            return Grid[position.Y][position.X];
+            if ( position.X >= 0 && position.Y >= 0 &&
+                position.X < gridsize && position.Y < gridsize )
+            {
+                return Grid [ position.Y ] [ position.X ];
+            }
+            return null;
         }
     }
 }
