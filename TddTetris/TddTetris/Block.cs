@@ -52,7 +52,7 @@ namespace TddTetris
 
         public Color? ColorAt( Point position )
         {
-            if ( position.X >= 0 && position.Y >= 0 &&
+               if ( position.X >= 0 && position.Y >= 0 &&
                 position.X < gridsize && position.Y < gridsize )
             {
                 return Grid [ position.Y ] [ position.X ];

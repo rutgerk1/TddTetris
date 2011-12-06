@@ -81,6 +81,11 @@ namespace TddTetris
             Position = new Point( Position.X + 1, Position.Y );
         }
 
+        public void RotateBlock()
+        {
+            Block.RotateLeft();
+        }
+
         public bool CanAdvance()
         {
             return Position.Y < Height - 1 ;//&& grid [ Position.Y + 1 ] [ Position.X ] == null;

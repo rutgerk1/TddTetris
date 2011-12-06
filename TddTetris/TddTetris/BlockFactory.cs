@@ -21,7 +21,7 @@ namespace TddTetris
         {
             Block block = new Block();
             insertStraight( block );
-            return new Block();
+            return block;
         }
     }
 }

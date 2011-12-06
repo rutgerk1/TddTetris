@@ -31,7 +31,12 @@ namespace TddTetris
                 MoveRightIfPossible();
             }
 
-            if (input.IndexOf(Keys.Space) > -1)
+            if ( input.IndexOf( Keys.Up ) > -1 )
+            {
+                field.RotateBlock();
+            }
+            
+            if ( input.IndexOf( Keys.Space ) > -1 )
             {
                 field.FixBlock();
             }

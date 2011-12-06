@@ -16,6 +16,8 @@ namespace TddTetris
         bool CanMoveRight();
         void MoveBlockRight();
 
+        void RotateBlock();
+
         bool CanAdvance();
         void AdvanceBlock();
 
