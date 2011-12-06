@@ -13,7 +13,8 @@ namespace Tests
     {
 
         [Test]
-        public void RotateLeftTest(){
+        public void RotateLeftTest()
+        {
             Block block = new Block();
 
             block.Grid [ 0 ] [ 0 ] = Color.Tomato;
@@ -58,15 +59,21 @@ namespace Tests
             Assert.AreEqual( Color.Tomato, block.Grid [ 0 ] [ 0 ] );
         }
 
-        [Test]
-        public void ColorAtPositionTest()
+        [TestCase( 0, 0 )]
+        [TestCase( 1, 1 )]
+        [TestCase( 2, 0 )]
+        [TestCase( 0, 2 )]
+        public void ColorAtPositionTest( int x, int y )
         {
+            Point position = new Point( x, y );
             Block block = new Block();
 
-            block.Grid [ 0 ] [ 0 ] = Color.Tomato;
-            Assert.AreEqual( null, block.ColorAt( new Point( 0, 0 ) ) );
+            block.Grid [ position.Y ] [ position.X ] = Color.Tomato;
+            Assert.AreEqual( Color.Tomato, block.ColorAt( position ) );
 
         }
+
+
 
     }
 }

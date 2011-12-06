@@ -52,7 +52,7 @@ namespace TddTetris
 
         public Color? ColorAt( Point position )
         {
-            throw new NotImplementedException();
+            return Grid[position.Y][position.X];
         }
     }
 }

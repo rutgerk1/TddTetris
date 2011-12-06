@@ -46,7 +46,7 @@ namespace TddTetris
             else
             {
                 field.FixBlock();
-                field.SetBlock( blockFactory.MakeBlock(), new Point(field.Width / 2, 0) );
+                field.SetBlock( blockFactory.MakeBlock(), new Point(field.Width / 2, -5) );
             }
         }
 

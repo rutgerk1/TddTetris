@@ -40,7 +40,9 @@ namespace TddTetris
                 throw new IndexOutOfRangeException();
             }
 
-            if ( position == Position )
+            //position is position in grid, Position is position of Block
+            Point p = new Point( ( position.X - Position.X ), ( position.Y - Position.Y ) );
+            if ( Block.ColorAt( p ) != null )
             {
                 return Color.White;
             }
