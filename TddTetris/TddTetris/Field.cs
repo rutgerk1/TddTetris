@@ -48,10 +48,20 @@ namespace TddTetris
             return grid [ y ] [ x ];
         }
 
+
+        private bool PositionOk(IBlock block, int x, int y)
+        {
+            if ( x + block.RightMost >= grid [ 0 ].Capacity ||
+                x + block.LeftMost < 0 )
+            {
+                return false;
+            }
+            return true;
+
+        }
         public void SetBlock( IBlock block, Point position )
         {
-            if ( position.X + 1 > grid [ 0 ].Capacity )
-            {
+            if (!PositionOk(block,position.X,position.Y)){
                 throw new FieldException() {
                     Code = FieldExceptionCode.BadBlockPlacement
                 };
@@ -67,7 +77,7 @@ namespace TddTetris
 
         public bool CanMoveLeft()
         {
-            return Position.X > 0 && grid [ Position.Y ] [ Position.X - 1 ] == null;
+            return PositionOk( this.Block, Position.X - 1, Position.Y );
         }
 
         public void MoveBlockLeft()
@@ -77,7 +87,7 @@ namespace TddTetris
 
         public bool CanMoveRight()
         {
-            return Position.X < Width - 1 && grid [ Position.Y ] [ Position.X + 1 ] == null;
+            return PositionOk( this.Block, Position.X + 1, Position.Y );
         }
 
         public void MoveBlockRight()
@@ -92,7 +102,7 @@ namespace TddTetris
 
         public bool CanAdvance()
         {
-            return Position.Y < Height - 1 ;//&& grid [ Position.Y + 1 ] [ Position.X ] == null;
+            return Position.Y < Height - 1;//&& grid [ Position.Y + 1 ] [ Position.X ] == null;
         }
 
         /// <summary>

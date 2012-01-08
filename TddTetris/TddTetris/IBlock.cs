@@ -8,6 +8,8 @@ namespace TddTetris
         List<List<Color?>> Grid { get; set; }
         void RotateLeft();
         void RotateRight();
+        int RightMost { get; }
+        int LeftMost { get; }
 
         Color? ColorAt( Point position );
     }

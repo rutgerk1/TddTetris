@@ -59,5 +59,46 @@ namespace TddTetris
             }
             return null;
         }
+
+        public int RightMost
+        {
+            get
+            {
+                //x
+                for ( int j = gridsize - 1; j >= 0; j-- )
+                {
+                    //y
+                    for ( int i = gridsize - 1; i >= 0; i-- )
+                    {
+                        if ( Grid [ i ] [ j ] != null )
+                        {
+                            return j;
+                        }
+                    }
+                }
+                return 0;
+            }
+        }
+
+        public int LeftMost
+        {
+            get
+            {
+                //x
+                for ( int j = 0; j < gridsize; j++ )
+                {
+                    //y
+                    for ( int i = gridsize - 1; i >= 0; i-- )
+                    {
+                        if ( Grid [ i ] [ j ] != null )
+                        {
+                            return j;
+                        }
+                    }
+                }
+                return 0;
+            }
+        }
+
     }
 }

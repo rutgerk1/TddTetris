@@ -60,14 +60,63 @@ namespace Tests
             Assert.AreEqual( false, moveleft );
         }
 
-        [Test]
-        [ExpectedException(typeof(FieldException))]
-        public void BadBlockPlacementTest()
+        [TestCase( 2, 0 )]
+        [TestCase( 5, 0 )]
+        [TestCase( -12, 0 )]
+        [ExpectedException( typeof( FieldException ) )]
+        public void BadBlockPlacementTest( int x, int y )
         {
             Field field = new Field( 2, 10 );
             IBlock block = new Block();
-            field.SetBlock( block, new Point( 5, 0 ) );
+            block.Grid [ 2 ] [ 2 ] = Color.Tomato;
+            field.SetBlock( block, new Point( x, y ) );
         }
+
+        [TestCase( -2, 0 )]
+        [TestCase( -1, 0 )]
+        [TestCase( 0, 0 )]
+        [TestCase( 1, 0 )]
+        [TestCase( 2, 0 )]
+        public void CorrectBlockPlacementTest( int x, int y )
+        {
+            Field field = new Field( 5, 10 );
+            IBlock block = new Block();
+            block.Grid [ 2 ] [ 2 ] = Color.Tomato;
+            field.SetBlock( block, new Point( x, y ) );
+        }
+
+        private void createBigBlock( IBlock block )
+        {
+            for ( int i = 0; i < 5; i++ )
+            {
+                for ( int j = 0; j < 5; j++ )
+                {
+                    block.Grid [ i ] [ j ] = Color.Tomato;
+                }
+            }
+        }
+
+        [TestCase( 0, 0 )]
+        public void CorrectBigBlockPlacementTest( int x, int y )
+        {
+            Field field = new Field( 5, 10 );
+            IBlock block = new Block();
+            createBigBlock( block );
+            field.SetBlock( block, new Point( x, y ) );
+        }
+
+        [TestCase( 1, 1 )]
+        [TestCase( 11, 1 )]
+        [TestCase( -1, 1 )]
+        [ExpectedException( typeof( FieldException ) )]
+        public void BadBigBlockPlacementTest( int x, int y )
+        {
+            Field field = new Field( 5, 10 );
+            IBlock block = new Block();
+            createBigBlock( block );
+            field.SetBlock( block, new Point( x, y ) );
+        }
+
 
     }
 }
