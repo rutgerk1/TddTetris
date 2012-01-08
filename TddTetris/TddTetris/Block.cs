@@ -7,7 +7,7 @@ namespace TddTetris
     public class Block : IBlock
     {
         public List<List<Color?>> Grid { get; set; }
-        private int gridsize = 5;   // bad: magic number
+        private const int gridsize = 5;   // bad: magic number
 
         private List<List<Color?>> createGrid()
         {
@@ -52,8 +52,8 @@ namespace TddTetris
 
         public Color? ColorAt( Point position )
         {
-               if ( position.X >= 0 && position.Y >= 0 &&
-                position.X < gridsize && position.Y < gridsize )
+            if ( position.X >= 0 && position.Y >= 0 &&
+             position.X < gridsize && position.Y < gridsize )
             {
                 return Grid [ position.Y ] [ position.X ];
             }

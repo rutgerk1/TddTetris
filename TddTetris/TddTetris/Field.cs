@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 
 namespace TddTetris
@@ -52,6 +50,12 @@ namespace TddTetris
 
         public void SetBlock( IBlock block, Point position )
         {
+            if ( position.X + 1 > grid [ 0 ].Capacity )
+            {
+                throw new FieldException() {
+                    Code = FieldExceptionCode.BadBlockPlacement
+                };
+            }
             this.Block = block;
             this.Position = position;
         }

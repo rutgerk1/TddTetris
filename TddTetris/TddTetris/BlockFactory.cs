@@ -11,10 +11,10 @@ namespace TddTetris
         private void insertStraight(Block block)
         {
             List<List<Color?>> grid = block.Grid;
-            grid [ 3 ] [ 1 ] = Color.Tomato;
-            grid [ 3 ] [ 2 ] = Color.Tomato;
-            grid [ 3 ] [ 3 ] = Color.Tomato;
-            grid [ 3 ] [ 4 ] = Color.Tomato;
+            grid [ 2 ] [ 1 ] = Color.Tomato;
+            grid [ 2 ] [ 2 ] = Color.Tomato;
+            grid [ 2 ] [ 3 ] = Color.Tomato;
+            grid [ 2 ] [ 4 ] = Color.Tomato;
         }
 
         public IBlock MakeBlock()

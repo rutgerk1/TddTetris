@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Block.cs" />
     <Compile Include="BlockFactory.cs" />
+    <Compile Include="FieldException.cs" />
     <Compile Include="IBlock.cs" />
     <Compile Include="Field.cs" />
     <Compile Include="GameMechanics.cs" />
