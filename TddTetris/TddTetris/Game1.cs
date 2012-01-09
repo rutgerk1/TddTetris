@@ -69,6 +69,7 @@ namespace TddTetris
 
             field = new Field(12, numberOfRows);
             gameMechanics = new GameMechanics(field, new BlockFactory());
+            field.SetBlock( new BlockFactory().MakeBlock(), new Point( field.Width / 2, -5 ) );
         }
 
         /// <summary>

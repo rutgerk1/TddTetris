@@ -42,26 +42,42 @@ namespace TddTetris
             Point p = new Point( ( position.X - Position.X ), ( position.Y - Position.Y ) );
             if ( Block != null && Block.ColorAt( p ) != null )
             {
-                return Color.White;
+                return Block.ColorAt( p );
             }
 
             return grid [ y ] [ x ];
         }
 
 
-        private bool PositionOk(IBlock block, int x, int y)
+        private bool PositionOk( IBlock block, int x, int y )
         {
+            // check for running outside field
             if ( x + block.RightMost >= grid [ 0 ].Capacity ||
                 x + block.LeftMost < 0 )
             {
                 return false;
             }
+            // check for other blocks
+            for ( int i = 0; i < block.Grid.Count; i++ )
+            {
+                for ( int j = 0; j < block.Grid.Count; j++ )
+                {
+                    if ( y + i < Height &&
+                        x + j < Width &&
+                        ( y + i > 0 && block.Grid [ i ] [ j ] != null && grid [ y + i ] [ x + j ] != null ) )
+                    {
+                        return false;
+                    }
+                }
+            }
+
             return true;
 
         }
         public void SetBlock( IBlock block, Point position )
         {
-            if (!PositionOk(block,position.X,position.Y)){
+            if ( !PositionOk( block, position.X, position.Y ) )
+            {
                 throw new FieldException() {
                     Code = FieldExceptionCode.BadBlockPlacement
                 };
@@ -102,7 +118,21 @@ namespace TddTetris
 
         public bool CanAdvance()
         {
-            return Position.Y < Height - 1;//&& grid [ Position.Y + 1 ] [ Position.X ] == null;
+            for ( int i = 0; i < Block.Grid.Count; i++ )
+            {
+                for ( int j = 0; j < Block.Grid.Count; j++ )
+                {
+                    if ( Block.Grid [ i ] [ j ] != null )
+                    {
+                        if ( Position.Y + i + 1 >= Height ||
+                            ( Position.Y + i + 1 >= 0 && grid [ Position.Y + i + 1 ] [ Position.X + j ] != null ) )
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
         /// <summary>
@@ -114,7 +144,17 @@ namespace TddTetris
             {
                 AdvanceBlock();
             }
-            grid [ Position.Y ] [ Position.X ] = Color.White;
+            for ( int i = 0; i < Block.Grid.Count; i++ )
+            {
+                for ( int j = 0; j < Block.Grid.Count; j++ )
+                {
+                    Color? color = Block.ColorAt( new Point( j, i ) );
+                    if ( color != null )
+                    {
+                        grid [ Position.Y + i ] [ Position.X + j ] = color;
+                    }
+                }
+            }
         }
     }
 }

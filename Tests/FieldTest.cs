@@ -12,13 +12,52 @@ namespace Tests
     public class FieldTest
     {
 
-        /* test should have a mock block
-         * 
-         */
-        [TestCase( 0, 5 )]
-        public void FixBlockTest( int x, int y )
+        [Test]
+        public void FixBlockTest()
         {
+            Field field = new Field( 1, 10 );
+            IBlock block = new Block();
+            block.Grid [ 0 ] [ 0 ] = Color.Tomato;
+            field.SetBlock( block, new Point( 0, 0 ) );
+            Assert.AreEqual( null, field.ColorAt( new Point( 0, 9 ) ) );
+            field.FixBlock();
+            Assert.AreEqual( Color.Tomato, field.ColorAt( new Point( 0, 9 ) ) );
+        }
 
+        [Test]
+        public void FixDoubleBlockTest()
+        {
+            Field field = new Field( 2, 10 );
+            IBlock block = new Block();
+            block.Grid [ 0 ] [ 0 ] = Color.Tomato;
+            block.Grid [ 0 ] [ 1 ] = Color.Tomato;
+            field.SetBlock( block, new Point( 0, 0 ) );
+            Assert.AreEqual( null, field.ColorAt( new Point( 0, 9 ) ) );
+            Assert.AreEqual( null, field.ColorAt( new Point( 1, 9 ) ) );
+            field.FixBlock();
+            Assert.AreEqual( Color.Tomato, field.ColorAt( new Point( 0, 9 ) ) );
+            Assert.AreEqual( Color.Tomato, field.ColorAt( new Point( 1, 9 ) ) );
+        }
+
+        [Test]
+        public void FixSquareBlockTest()
+        {
+            Field field = new Field( 2, 10 );
+            IBlock block = new Block();
+            block.Grid [ 0 ] [ 0 ] = Color.Tomato;
+            block.Grid [ 0 ] [ 1 ] = Color.Tomato;
+            block.Grid [ 1 ] [ 0 ] = Color.Tomato;
+            block.Grid [ 1 ] [ 1 ] = Color.Tomato;
+            field.SetBlock( block, new Point( 0, 0 ) );
+            Assert.AreEqual( null, field.ColorAt( new Point( 0, 9 ) ) );
+            Assert.AreEqual( null, field.ColorAt( new Point( 1, 9 ) ) );
+            Assert.AreEqual( null, field.ColorAt( new Point( 0, 8 ) ) );
+            Assert.AreEqual( null, field.ColorAt( new Point( 1, 8 ) ) );
+            field.FixBlock();
+            Assert.AreEqual( Color.Tomato, field.ColorAt( new Point( 0, 9 ) ) );
+            Assert.AreEqual( Color.Tomato, field.ColorAt( new Point( 1, 9 ) ) );
+            Assert.AreEqual( Color.Tomato, field.ColorAt( new Point( 0, 8 ) ) );
+            Assert.AreEqual( Color.Tomato, field.ColorAt( new Point( 1, 8 ) ) );
         }
 
         [Test]
@@ -26,6 +65,8 @@ namespace Tests
         {
             Field field = new Field( 1, 10 );
             IBlock block = new Block();
+            block.Grid [ 0 ] [ 0 ] = Color.Tomato;
+
             field.SetBlock( block, new Point( 0, 0 ) );
 
             block.Grid [ 0 ] [ 0 ] = Color.Tomato;
@@ -116,6 +157,8 @@ namespace Tests
             createBigBlock( block );
             field.SetBlock( block, new Point( x, y ) );
         }
+
+
 
 
     }
