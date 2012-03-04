@@ -159,7 +159,42 @@ namespace Tests
         }
 
 
+        [TestCase( 0, 0 )]
+        [TestCase( 1, 1 )]
+        [TestCase( 2, 2 )]
+        [TestCase( 3, 3 )]
+        [TestCase( 4, 4 )]
+        [TestCase( 5, 5 )]
+        [TestCase( 3, -10 )]
+        [TestCase( 4, -2 )]
+        [TestCase( 5, -5 )]
+        public void PositionTest( int x, int y )
+        {
+            IField field = new Field( 10, 10 );
+            IBlock block = new BlockFactory().MakeBlock();
+            field.SetBlock( block, new Point( x, y ) );
+            field.Checker.Check( field, block, x, y );
+        }
 
+        [TestCase( -10, 6 )]
+        [TestCase( 6, 6 )]
+        [TestCase( 9, 9 )]
+        public void BadPositionTest( int x, int y )
+        {
+            IField field = new Field( 10, 10 );
+            IBlock block = new BlockFactory().MakeBlock();
+            field.SetBlock( block, new Point( 5, 5 ) );
+            try
+            {
+                if ( field.Checker.Check(field, block, x, y ) )
+                {
+                    throw new Exception( string.Format( "bad position has succeeded: x: {0}, y: {1}", x, y ) );
+                }
+            }
+            catch ( FieldException )
+            {
+            }
+        }
 
     }
 }

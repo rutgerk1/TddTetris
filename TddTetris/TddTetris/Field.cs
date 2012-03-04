@@ -11,19 +11,22 @@ namespace TddTetris
 
         public IBlock Block { get; private set; }
         public Point Position { get; private set; }
-        private List<List<Color?>> grid;
+        public List<List<Color?>> Grid { get; private set; }
+
+        public OverlapChecker Checker { get; set; }
 
         public Field( int width, int height )
         {
             this.Width = width;
             this.Height = height;
-            grid = new List<List<Color?>>( height );
+            Checker = new OverlapChecker();
+            Grid = new List<List<Color?>>( height );
             for ( int i = 0; i < height; i++ )
             {
-                grid.Add( new List<Color?>( width ) );
+                Grid.Add( new List<Color?>( width ) );
                 for ( int j = 0; j < width; j++ )
                 {
-                    grid [ i ].Add( null );
+                    Grid [ i ].Add( null );
                 }
             }
         }
@@ -38,45 +41,20 @@ namespace TddTetris
                 throw new IndexOutOfRangeException();
             }
 
-            //position is position in grid, Position is position of Block
+            //position is position in Grid, Position is position of Block
             Point p = new Point( ( position.X - Position.X ), ( position.Y - Position.Y ) );
             if ( Block != null && Block.ColorAt( p ) != null )
             {
                 return Block.ColorAt( p );
             }
 
-            return grid [ y ] [ x ];
+            return Grid [ y ] [ x ];
         }
 
 
-        private bool PositionOk( IBlock block, int x, int y )
-        {
-            // check for running outside field
-            if ( x + block.RightMost >= grid [ 0 ].Capacity ||
-                x + block.LeftMost < 0 )
-            {
-                return false;
-            }
-            // check for other blocks
-            for ( int i = 0; i < block.Grid.Count; i++ )
-            {
-                for ( int j = 0; j < block.Grid.Count; j++ )
-                {
-                    if ( y + i < Height &&
-                        x + j < Width &&
-                        ( y + i > 0 && block.Grid [ i ] [ j ] != null && grid [ y + i ] [ x + j ] != null ) )
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-
-        }
         public void SetBlock( IBlock block, Point position )
         {
-            if ( !PositionOk( block, position.X, position.Y ) )
+            if ( !this.Checker.Check(this,block, position.X, position.Y ) )
             {
                 throw new FieldException() {
                     Code = FieldExceptionCode.BadBlockPlacement
@@ -93,7 +71,7 @@ namespace TddTetris
 
         public bool CanMoveLeft()
         {
-            return PositionOk( this.Block, Position.X - 1, Position.Y );
+            return this.Checker.Check( this, this.Block, Position.X - 1, Position.Y );
         }
 
         public void MoveBlockLeft()
@@ -103,7 +81,7 @@ namespace TddTetris
 
         public bool CanMoveRight()
         {
-            return PositionOk( this.Block, Position.X + 1, Position.Y );
+            return this.Checker.Check( this, this.Block, Position.X + 1, Position.Y );
         }
 
         public void MoveBlockRight()
@@ -118,21 +96,7 @@ namespace TddTetris
 
         public bool CanAdvance()
         {
-            for ( int i = 0; i < Block.Grid.Count; i++ )
-            {
-                for ( int j = 0; j < Block.Grid.Count; j++ )
-                {
-                    if ( Block.Grid [ i ] [ j ] != null )
-                    {
-                        if ( Position.Y + i + 1 >= Height ||
-                            ( Position.Y + i + 1 >= 0 && grid [ Position.Y + i + 1 ] [ Position.X + j ] != null ) )
-                        {
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
+            return Checker.Check(this, Block, Position.X, Position.Y + 1);
         }
 
         /// <summary>
@@ -151,7 +115,7 @@ namespace TddTetris
                     Color? color = Block.ColorAt( new Point( j, i ) );
                     if ( color != null )
                     {
-                        grid [ Position.Y + i ] [ Position.X + j ] = color;
+                        Grid [ Position.Y + i ] [ Position.X + j ] = color;
                     }
                 }
             }

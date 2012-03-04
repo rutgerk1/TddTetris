@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using TddTetris;
-using Microsoft.Xna.Framework;
 
 namespace Tests
 {
@@ -15,7 +11,7 @@ namespace Tests
         [Test]
         public void RotateLeftTest()
         {
-            Block block = new Block();
+            var block = new Block();
 
             block.Grid [ 0 ] [ 0 ] = Color.Tomato;
 
