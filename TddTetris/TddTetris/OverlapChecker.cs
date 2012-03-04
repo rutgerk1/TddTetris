@@ -7,7 +7,7 @@ namespace TddTetris
 {
     public class OverlapChecker
     {
-        public bool Check( IField field, IBlock block, int x, int y )
+        public virtual bool Check( IField field, IBlock block, int x, int y )
         {
 
 

@@ -5,6 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using TddTetris;
 using Microsoft.Xna.Framework;
+using Moq;
 
 namespace Tests
 {
@@ -186,7 +187,7 @@ namespace Tests
             field.SetBlock( block, new Point( 5, 5 ) );
             try
             {
-                if ( field.Checker.Check(field, block, x, y ) )
+                if ( field.Checker.Check( field, block, x, y ) )
                 {
                     throw new Exception( string.Format( "bad position has succeeded: x: {0}, y: {1}", x, y ) );
                 }
@@ -194,6 +195,26 @@ namespace Tests
             catch ( FieldException )
             {
             }
+        }
+
+        [Test]
+        public void CanAdvanceTrue()
+        {
+            var field = new Field( 10, 10 );
+            var checker = new Mock<OverlapChecker>();
+            checker.Setup( x => x.Check( field, null, 0, 1 ) ).Returns( true );
+            field.Checker = checker.Object;
+
+            Assert.AreEqual( true, field.CanAdvance() );
+        }
+        [Test]
+        public void CanAdvanceFalse()
+        {
+            var field = new Field( 10, 10 );
+            var checker = new Mock<OverlapChecker>();
+            checker.Setup( x => x.Check( field, null, 0, 1 ) ).Returns( false );
+            field.Checker = checker.Object;
+            Assert.AreEqual( false, field.CanAdvance() );
         }
 
     }
